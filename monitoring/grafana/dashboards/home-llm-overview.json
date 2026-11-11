@@ -1,632 +1,632 @@
 {
- "title": "Home LLM overview",
- "uid": "home-llm-overview",
- "refresh": "10s",
- "time": {
-  "from": "now-1h",
-  "to": "now"
- },
- "schemaVersion": 39,
- "panels": [
-  {
-   "type": "stat",
-   "title": "VRAM offset (MHz)",
-   "gridPos": {
-    "x": 0,
-    "y": 0,
-    "w": 3,
-    "h": 5
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "vram_oc_offset_mhz",
-     "legendFormat": ""
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "none",
-     "thresholds": {
-      "mode": "absolute",
-      "steps": [
-       {
-        "color": "green",
-        "value": null
-       }
-      ]
-     },
-     "color": {
-      "mode": "thresholds"
-     }
-    },
-    "overrides": []
-   },
-   "options": {}
+  "title": "Home LLM overview",
+  "uid": "home-llm-overview",
+  "refresh": "1s",
+  "time": {
+    "from": "now-1h",
+    "to": "now"
   },
-  {
-   "type": "stat",
-   "title": "Xid errors since boot",
-   "gridPos": {
-    "x": 3,
-    "y": 0,
-    "w": 3,
-    "h": 5
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
+  "schemaVersion": 39,
+  "panels": [
     {
-     "refId": "A",
-     "expr": "vram_oc_xid_errors_total",
-     "legendFormat": ""
+      "type": "stat",
+      "title": "VRAM offset (MHz)",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 3,
+        "h": 5
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "vram_oc_offset_mhz",
+          "legendFormat": ""
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "stat",
+      "title": "Xid errors since boot",
+      "gridPos": {
+        "x": 3,
+        "y": 0,
+        "w": 3,
+        "h": 5
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "vram_oc_xid_errors_total",
+          "legendFormat": ""
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "stat",
+      "title": "Watchdog tripped (1 = reset to stock)",
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 3,
+        "h": 5
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "vram_oc_tripped",
+          "legendFormat": ""
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "stat",
+      "title": "Total tok/s (all sessions)",
+      "gridPos": {
+        "x": 9,
+        "y": 0,
+        "w": 3,
+        "h": 5
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(vllm:generation_tokens_total[1m]))",
+          "legendFormat": ""
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "stat",
+      "title": "Running requests",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 3,
+        "h": 5
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(vllm:num_requests_running)",
+          "legendFormat": ""
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "stat",
+      "title": "Drafter accepted tokens per step",
+      "gridPos": {
+        "x": 15,
+        "y": 0,
+        "w": 3,
+        "h": 5
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(vllm:spec_decode_num_accepted_tokens_total[5m])) / sum(rate(vllm:spec_decode_num_drafts_total[5m]))",
+          "legendFormat": ""
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "timeseries",
+      "title": "Generation and prompt tok/s",
+      "gridPos": {
+        "x": 0,
+        "y": 5,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(vllm:generation_tokens_total[1m]))",
+          "legendFormat": "generated"
+        },
+        {
+          "refId": "B",
+          "expr": "sum(rate(vllm:prompt_tokens_total[1m]))",
+          "legendFormat": "prompt"
+        },
+        {
+          "refId": "C",
+          "legendFormat": "per session",
+          "expr": "sum(rate(vllm:generation_tokens_total[1m])) / (sum(vllm:num_requests_running) > 0)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "timeseries",
+      "title": "KV cache usage",
+      "gridPos": {
+        "x": 12,
+        "y": 5,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "avg(vllm:kv_cache_usage_perc)",
+          "legendFormat": "KV cache"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "timeseries",
+      "title": "GPU memory clock",
+      "gridPos": {
+        "x": 0,
+        "y": 13,
+        "w": 8,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "nvidia_smi_clocks_current_memory_clock_hz * on(uuid) group_left(card) gpu_card_info",
+          "legendFormat": "{{card}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "hertz"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "timeseries",
+      "title": "GPU temperature",
+      "gridPos": {
+        "x": 8,
+        "y": 13,
+        "w": 8,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "nvidia_smi_temperature_gpu * on(uuid) group_left(card) gpu_card_info",
+          "legendFormat": "{{card}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "timeseries",
+      "title": "GPU power",
+      "gridPos": {
+        "x": 16,
+        "y": 13,
+        "w": 8,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "nvidia_smi_power_draw_watts * on(uuid) group_left(card) gpu_card_info",
+          "legendFormat": "{{card}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "timeseries",
+      "title": "GPU utilization",
+      "gridPos": {
+        "x": 0,
+        "y": 21,
+        "w": 8,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "nvidia_smi_utilization_gpu_ratio * on(uuid) group_left(card) gpu_card_info",
+          "legendFormat": "{{card}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "timeseries",
+      "title": "VRM temperature",
+      "gridPos": {
+        "x": 8,
+        "y": 21,
+        "w": 8,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "node_hwmon_temp_celsius * on(chip, sensor) group_left(label) node_hwmon_sensor_label{label=\"CPU VRM Temperature\"}",
+          "legendFormat": "VRM"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "timeseries",
+      "title": "CPU cooler / VRM fans (RPM)",
+      "gridPos": {
+        "x": 16,
+        "y": 21,
+        "w": 8,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "node_hwmon_fan_rpm * on(chip, sensor) group_left(label) node_hwmon_sensor_label{label=~\"CPU Fan|CPU OPT\"}",
+          "legendFormat": "{{label}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "rpm"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "stat",
+      "title": "tok/s per session",
+      "gridPos": {
+        "x": 18,
+        "y": 0,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "legendFormat": "",
+          "expr": "sum(rate(vllm:generation_tokens_total[1m])) / (sum(vllm:num_requests_running) > 0)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "timeseries",
+      "title": "CPU temperature (Tdie, real)",
+      "gridPos": {
+        "x": 0,
+        "y": 29,
+        "w": 8,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "node_hwmon_temp_celsius * on(chip, sensor) group_left(label) node_hwmon_sensor_label{chip=~\".*00:18_3|.*00:19_3\", label=\"Tdie\"}",
+          "legendFormat": "{{chip}} {{label}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "timeseries",
+      "title": "CPU usage",
+      "gridPos": {
+        "x": 8,
+        "y": 29,
+        "w": 8,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "1 - avg(rate(node_cpu_seconds_total{mode=\"idle\"}[1m]))",
+          "legendFormat": "all cores"
+        },
+        {
+          "refId": "B",
+          "expr": "max(1 - rate(node_cpu_seconds_total{mode=\"idle\"}[1m]))",
+          "legendFormat": "busiest core"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "max": 1
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "type": "timeseries",
+      "title": "RAM usage",
+      "gridPos": {
+        "x": 16,
+        "y": 29,
+        "w": 8,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes",
+          "legendFormat": "used"
+        },
+        {
+          "refId": "B",
+          "expr": "node_memory_MemTotal_bytes",
+          "legendFormat": "total"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "options": {}
     }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "none",
-     "thresholds": {
-      "mode": "absolute",
-      "steps": [
-       {
-        "color": "green",
-        "value": null
-       },
-       {
-        "color": "red",
-        "value": 1
-       }
-      ]
-     },
-     "color": {
-      "mode": "thresholds"
-     }
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "stat",
-   "title": "Watchdog tripped (1 = reset to stock)",
-   "gridPos": {
-    "x": 6,
-    "y": 0,
-    "w": 3,
-    "h": 5
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "vram_oc_tripped",
-     "legendFormat": ""
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "none",
-     "thresholds": {
-      "mode": "absolute",
-      "steps": [
-       {
-        "color": "green",
-        "value": null
-       },
-       {
-        "color": "red",
-        "value": 1
-       }
-      ]
-     },
-     "color": {
-      "mode": "thresholds"
-     }
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "stat",
-   "title": "Total tok/s (all sessions)",
-   "gridPos": {
-    "x": 9,
-    "y": 0,
-    "w": 3,
-    "h": 5
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "sum(rate(vllm:generation_tokens_total[1m]))",
-     "legendFormat": ""
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "none",
-     "thresholds": {
-      "mode": "absolute",
-      "steps": [
-       {
-        "color": "green",
-        "value": null
-       }
-      ]
-     },
-     "color": {
-      "mode": "thresholds"
-     }
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "stat",
-   "title": "Running requests",
-   "gridPos": {
-    "x": 12,
-    "y": 0,
-    "w": 3,
-    "h": 5
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "sum(vllm:num_requests_running)",
-     "legendFormat": ""
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "none",
-     "thresholds": {
-      "mode": "absolute",
-      "steps": [
-       {
-        "color": "green",
-        "value": null
-       }
-      ]
-     },
-     "color": {
-      "mode": "thresholds"
-     }
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "stat",
-   "title": "Drafter accepted tokens per step",
-   "gridPos": {
-    "x": 15,
-    "y": 0,
-    "w": 3,
-    "h": 5
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "sum(rate(vllm:spec_decode_num_accepted_tokens_total[5m])) / sum(rate(vllm:spec_decode_num_drafts_total[5m]))",
-     "legendFormat": ""
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "none",
-     "thresholds": {
-      "mode": "absolute",
-      "steps": [
-       {
-        "color": "green",
-        "value": null
-       }
-      ]
-     },
-     "color": {
-      "mode": "thresholds"
-     }
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "timeseries",
-   "title": "Generation and prompt tok/s",
-   "gridPos": {
-    "x": 0,
-    "y": 5,
-    "w": 12,
-    "h": 8
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "sum(rate(vllm:generation_tokens_total[1m]))",
-     "legendFormat": "generated"
-    },
-    {
-     "refId": "B",
-     "expr": "sum(rate(vllm:prompt_tokens_total[1m]))",
-     "legendFormat": "prompt"
-    },
-    {
-     "refId": "C",
-     "legendFormat": "per session",
-     "expr": "sum(rate(vllm:generation_tokens_total[1m])) / (sum(vllm:num_requests_running) > 0)"
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "none"
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "timeseries",
-   "title": "KV cache usage",
-   "gridPos": {
-    "x": 12,
-    "y": 5,
-    "w": 12,
-    "h": 8
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "avg(vllm:kv_cache_usage_perc)",
-     "legendFormat": "KV cache"
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "percentunit"
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "timeseries",
-   "title": "GPU memory clock",
-   "gridPos": {
-    "x": 0,
-    "y": 13,
-    "w": 8,
-    "h": 8
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "nvidia_smi_clocks_current_memory_clock_hz * on(uuid) group_left(card) gpu_card_info",
-     "legendFormat": "{{card}}"
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "hertz"
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "timeseries",
-   "title": "GPU temperature",
-   "gridPos": {
-    "x": 8,
-    "y": 13,
-    "w": 8,
-    "h": 8
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "nvidia_smi_temperature_gpu * on(uuid) group_left(card) gpu_card_info",
-     "legendFormat": "{{card}}"
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "celsius"
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "timeseries",
-   "title": "GPU power",
-   "gridPos": {
-    "x": 16,
-    "y": 13,
-    "w": 8,
-    "h": 8
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "nvidia_smi_power_draw_watts * on(uuid) group_left(card) gpu_card_info",
-     "legendFormat": "{{card}}"
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "watt"
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "timeseries",
-   "title": "GPU utilization",
-   "gridPos": {
-    "x": 0,
-    "y": 21,
-    "w": 8,
-    "h": 8
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "nvidia_smi_utilization_gpu_ratio * on(uuid) group_left(card) gpu_card_info",
-     "legendFormat": "{{card}}"
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "percentunit"
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "timeseries",
-   "title": "VRM temperature",
-   "gridPos": {
-    "x": 8,
-    "y": 21,
-    "w": 8,
-    "h": 8
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "node_hwmon_temp_celsius * on(chip, sensor) group_left(label) node_hwmon_sensor_label{label=\"CPU VRM Temperature\"}",
-     "legendFormat": "VRM"
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "celsius"
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "timeseries",
-   "title": "CPU cooler / VRM fans (RPM)",
-   "gridPos": {
-    "x": 16,
-    "y": 21,
-    "w": 8,
-    "h": 8
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "node_hwmon_fan_rpm * on(chip, sensor) group_left(label) node_hwmon_sensor_label{label=~\"CPU Fan|CPU OPT\"}",
-     "legendFormat": "{{label}}"
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "rpm"
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "stat",
-   "title": "tok/s per session",
-   "gridPos": {
-    "x": 18,
-    "y": 0,
-    "w": 6,
-    "h": 5
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "legendFormat": "",
-     "expr": "sum(rate(vllm:generation_tokens_total[1m])) / (sum(vllm:num_requests_running) > 0)"
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "none",
-     "thresholds": {
-      "mode": "absolute",
-      "steps": [
-       {
-        "color": "green",
-        "value": null
-       }
-      ]
-     },
-     "color": {
-      "mode": "thresholds"
-     }
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "timeseries",
-   "title": "CPU temperature (Tdie, real)",
-   "gridPos": {
-    "x": 0,
-    "y": 29,
-    "w": 8,
-    "h": 8
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "node_hwmon_temp_celsius * on(chip, sensor) group_left(label) node_hwmon_sensor_label{chip=~\".*00:18_3|.*00:19_3\", label=\"Tdie\"}",
-     "legendFormat": "{{chip}} {{label}}"
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "celsius"
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "timeseries",
-   "title": "CPU usage",
-   "gridPos": {
-    "x": 8,
-    "y": 29,
-    "w": 8,
-    "h": 8
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "1 - avg(rate(node_cpu_seconds_total{mode=\"idle\"}[1m]))",
-     "legendFormat": "all cores"
-    },
-    {
-     "refId": "B",
-     "expr": "max(1 - rate(node_cpu_seconds_total{mode=\"idle\"}[1m]))",
-     "legendFormat": "busiest core"
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "percentunit",
-     "max": 1
-    },
-    "overrides": []
-   },
-   "options": {}
-  },
-  {
-   "type": "timeseries",
-   "title": "RAM usage",
-   "gridPos": {
-    "x": 16,
-    "y": 29,
-    "w": 8,
-    "h": 8
-   },
-   "datasource": {
-    "type": "prometheus",
-    "uid": "prometheus"
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "expr": "node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes",
-     "legendFormat": "used"
-    },
-    {
-     "refId": "B",
-     "expr": "node_memory_MemTotal_bytes",
-     "legendFormat": "total"
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "bytes"
-    },
-    "overrides": []
-   },
-   "options": {}
-  }
- ],
- "tags": [
-  "home-llm"
- ]
+  ],
+  "tags": [
+    "home-llm"
+  ]
 }

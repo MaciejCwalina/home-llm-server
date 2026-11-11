@@ -3,7 +3,7 @@
 
 - Enables persistence mode so the driver keeps the offset while no process uses the GPUs.
 - Applies OFFSET_MHZ (from /etc/default/vram-oc) through NVML.
-- Every 5 s counts NVIDIA Xid errors in the kernel log. On a new Xid it resets every GPU to stock (offset 0)
+- Every second counts NVIDIA Xid errors in the kernel log. On a new Xid it resets every GPU to stock (offset 0)
   and stays at stock until the service is restarted by hand.
 - Writes Prometheus metrics for node exporter's textfile collector.
 - On stop it resets the offset to 0.
@@ -19,7 +19,7 @@ import pynvml as nvml
 
 OFFSET_MHZ = int(os.environ.get("OFFSET_MHZ", "0"))
 TEXTFILE = "/var/lib/node_exporter/textfile/vram_oc.prom"
-INTERVAL_SECONDS = 5
+INTERVAL_SECONDS = 1
 
 
 def set_offset(offset):
