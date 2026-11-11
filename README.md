@@ -8,7 +8,7 @@ How to run **Qwen3.8-27B (NVFP4)** fast on **4× RTX 5060 Ti 16 GB** consumer ca
 | 3 sessions (total) | 300 tok/s | **~560 tok/s** |
 | 8 sessions (total) | 430 tok/s | **~840 tok/s** |
 | Prompt reading (29.5K tokens) | ~815 tok/s | **~2,060 tok/s** |
-| KV cache | 773K tokens | 584K tokens |
+| KV cache | 773K tokens | **933K tokens** |
 
 Each figure comes from a single run of `bench.py`, so expect ±2–3 % noise. For comparison, one RTX PRO 6000 did 216 tok/s for a single session with the same model and MTP.
 
@@ -18,6 +18,7 @@ Each figure comes from a single run of `bench.py`, so expect ±2–3 % noise. Fo
 2. **FlashInfer PCIe IPC all-reduce** (`VLLM_ALLREDUCE_USE_FLASHINFER_PCIE_IPC=1`). It replaces NCCL for the tensor-parallel all-reduces and is built for PCIe-only GPUs with P2P. vLLM's own custom all-reduce turns itself off for more than 2 PCIe GPUs; forcing it on made 8 sessions 10 % slower. This change alone took 3 sessions from 300 to 438 tok/s and doubled prefill.
 3. **DFlash2 speculative decoding** ([incoai/Qwen3.8-27B-DFlash2](https://huggingface.co/incoai/Qwen3.8-27B-DFlash2)) instead of the built-in MTP head. It drafts 7 tokens per step and ~5.1 get accepted. It is quantized to FP8 at load time (`"quantization":"fp8"`), which matches BF16 speed and frees ~48K tokens of KV. **Don't use the pre-quantized FP8 checkpoint**: at TP=4 it got 0 % acceptance.
 4. `--async-scheduling`: about +4 % at 3 sessions.
+5. **NVFP4 KV cache** (`--kv-cache-dtype nvfp4`): 933K tokens of context instead of 584K with fp8, at the same speed. The drafter keeps its own KV for every token too, so shrinking the KV matters more than shrinking the drafter's weights. A recall test (three facts hidden at 10/50/90 % of a 146K-token prompt) passed 3/3 on both fp8 and nvfp4.
 
 **Things that didn't help:** P2P through NCCL alone, the CPU governor, `--max-num-batched-tokens 16384` (runs out of memory at startup), 8192 (+8 % prefill but −4 % at 8 sessions and less KV), MTP 6 or more (faster for one session, slower for 8).
 
@@ -54,6 +55,7 @@ python3 bench.py 3 8
 
 | Variable | Effect |
 |---|---|
+| `KV_CACHE_DTYPE=fp8` | back to the fp8 KV cache (584K tokens) |
 | `SPEC_CONFIG=mtp` | use the built-in MTP head instead of DFlash2 (183 / 438 / 745 tok/s, KV ~773K) |
 | `MTP_TOKENS=5` | MTP draft length (5 is the best balance) |
 | `VLLM_DOCKER_ENV="..."` | override the container environment; the default enables the FlashInfer all-reduce |

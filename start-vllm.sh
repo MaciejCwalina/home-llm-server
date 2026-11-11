@@ -7,6 +7,7 @@
 #   SPEC_CONFIG='{...}'           replace the whole --speculative-config (e.g. a DFlash2 drafter)
 #   VLLM_EXTRA_ARGS="..."         extra vllm serve flags (default: --async-scheduling)
 #   VLLM_DOCKER_ENV="-e A=1 ..."  extra container environment (e.g. all-reduce switches)
+#   KV_CACHE_DTYPE=nvfp4          KV cache format (nvfp4: 933K tokens, same speed and recall as fp8: 584K)
 #   FORCE_CUSTOM_ALL_REDUCE=1     mount the patched custom_all_reduce.py (tested: slower, kept for reference)
 set -euo pipefail
 # Default drafter: DFlash2, quantized to FP8 at load (same speed as BF16, KV 584K vs 536K). The pre-quantized FP8 checkpoint gives 0% acceptance at TP=4.
@@ -32,7 +33,7 @@ docker run -d --name vllm --restart unless-stopped \
   --served-model-name swift-qwen3.8-27b-uncensored \
   --tensor-parallel-size 4 \
   --max-model-len 262144 \
-  --kv-cache-dtype fp8 \
+  --kv-cache-dtype "${KV_CACHE_DTYPE:-nvfp4}" \
   --gpu-memory-utilization 0.94 \
   --max-num-seqs 8 \
   --reasoning-parser qwen3 \
