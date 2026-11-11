@@ -532,7 +532,7 @@
   },
   {
    "type": "timeseries",
-   "title": "CPU temperature (real, Tdie / CCD)",
+   "title": "CPU temperature (Tdie, real)",
    "gridPos": {
     "x": 0,
     "y": 29,
@@ -546,7 +546,7 @@
    "targets": [
     {
      "refId": "A",
-     "expr": "node_hwmon_temp_celsius * on(chip, sensor) group_left(label) node_hwmon_sensor_label{chip=~\".*00:18_3|.*00:19_3\", label=~\"Tdie|Tccd.*\"}",
+     "expr": "node_hwmon_temp_celsius * on(chip, sensor) group_left(label) node_hwmon_sensor_label{chip=~\".*00:18_3|.*00:19_3\", label=\"Tdie\"}",
      "legendFormat": "{{chip}} {{label}}"
     }
    ],
