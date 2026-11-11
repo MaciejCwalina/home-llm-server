@@ -34,7 +34,7 @@ docker run -d --name vllm --restart unless-stopped \
   --tensor-parallel-size 4 \
   --max-model-len 262144 \
   --kv-cache-dtype "${KV_CACHE_DTYPE:-nvfp4}" \
-  --gpu-memory-utilization 0.94 \
+  --gpu-memory-utilization "${GPU_MEMORY_UTILIZATION:-0.94}" \
   --max-num-seqs 8 \
   --reasoning-parser qwen3 \
   --enable-auto-tool-choice \
