@@ -283,7 +283,7 @@
     {
      "refId": "C",
      "legendFormat": "per session",
-     "expr": "sum(rate(vllm:generation_tokens_total[1m])) / clamp_min(sum(vllm:num_requests_running), 1)"
+     "expr": "sum(rate(vllm:generation_tokens_total[1m])) / (sum(vllm:num_requests_running) > 0)"
     }
    ],
    "fieldConfig": {
@@ -507,7 +507,7 @@
     {
      "refId": "A",
      "legendFormat": "",
-     "expr": "sum(rate(vllm:generation_tokens_total[1m])) / clamp_min(sum(vllm:num_requests_running), 1)"
+     "expr": "sum(rate(vllm:generation_tokens_total[1m])) / (sum(vllm:num_requests_running) > 0)"
     }
    ],
    "fieldConfig": {
