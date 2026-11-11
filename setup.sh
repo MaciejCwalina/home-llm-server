@@ -10,6 +10,8 @@
 #   ./setup.sh models   download the model and the DFlash2 drafter into ~/llm/models
 #   ./setup.sh key      generate the API key into ~/llm/vllm.env (never printed)
 #   ./setup.sh start    install start-vllm.sh into ~/llm and start the server
+#   ./setup.sh vram-oc  GDDR7 memory overclock (+5000) with an Xid watchdog that resets to stock
+#   ./setup.sh monitoring  Prometheus + Grafana (:3000) with GPU/vLLM/VRM dashboards and Discord alerts
 #
 # The BIOS part can't be scripted. See README.md: UEFI boot (CSM off), Above 4G Decoding, Re-Size BAR.
 set -euo pipefail
@@ -125,7 +127,40 @@ stage_start() {
     return 1
 }
 
+stage_vram_oc() {
+    [ -d "$LLM_HOME/.venv" ] || python3 -m venv "$LLM_HOME/.venv"
+    "$LLM_HOME/.venv/bin/pip" install -q nvidia-ml-py
+    sudo mkdir -p /var/lib/node_exporter/textfile
+    sudo install -m 755 "$SCRIPT_DIRECTORY/vram-oc/vram-oc-guard" /usr/local/bin/vram-oc-guard
+    sed "s|/home/maciej/llm|$LLM_HOME|g" "$SCRIPT_DIRECTORY/vram-oc/vram-oc-guard.service" | sudo tee /etc/systemd/system/vram-oc-guard.service >/dev/null
+    [ -f /etc/default/vram-oc ] || sudo install -m 644 "$SCRIPT_DIRECTORY/vram-oc/vram-oc.default" /etc/default/vram-oc
+    sudo systemctl daemon-reload
+    sudo systemctl enable --now vram-oc-guard
+    sleep 5; sudo journalctl -u vram-oc-guard -n 2 --no-pager -o cat
+}
+
+stage_monitoring() {
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq docker-compose-v2
+    mkdir -p "$LLM_HOME/monitoring"
+    cp -r "$SCRIPT_DIRECTORY/monitoring/." "$LLM_HOME/monitoring/"
+    if [ ! -s "$LLM_HOME/monitoring/grafana.env" ]; then
+        read -r -p "Discord webhook URL for alerts (empty to skip): " webhook
+        (umask 077; {
+            printf 'GF_SECURITY_ADMIN_PASSWORD=%s\n' "$(head -c 32 /dev/urandom | base64 | tr -dc A-Za-z0-9 | head -c 24)"
+            printf 'DISCORD_WEBHOOK_URL=%s\n' "$webhook"
+        } > "$LLM_HOME/monitoring/grafana.env")
+        echo "Grafana admin password written to $LLM_HOME/monitoring/grafana.env"
+    fi
+    # card names for dashboard legends (edit to match your cards)
+    nvidia-smi --query-gpu=index,uuid,name --format=csv,noheader | awk -F', ' '{gsub("GPU-","",$2); printf "gpu_card_info{uuid=\"%s\",card=\"GPU%s %s\"} 1\n", $2, $1, $3}' \
+        | sudo tee /var/lib/node_exporter/textfile/gpu_cards.prom >/dev/null
+    (cd "$LLM_HOME/monitoring" && docker compose up -d)
+    echo "Grafana: http://$(hostname -I | awk '{print $1}'):3000 (user admin)"
+}
+
 case "${1:-}" in
+    vram-oc) stage_vram_oc ;;
+    monitoring) stage_monitoring ;;
     host|driver|check|docker|models|key|start) "stage_$1" ;;
-    *) sed -n '2,15p' "$0"; exit 1 ;;
+    *) sed -n '2,17p' "$0"; exit 1 ;;
 esac

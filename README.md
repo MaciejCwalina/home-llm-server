@@ -51,6 +51,25 @@ python3 bench.py 3 8
 
 **Kernel updates:** the patched modules aren't DKMS, so `setup.sh driver` holds the kernel packages. To update the kernel, unhold it, upgrade, re-run `./setup.sh driver`, then reboot.
 
+## VRAM overclock
+
+Decode is limited by memory bandwidth, so a GDDR7 overclock helps. NVML allows offsets from −2000 to +6000 on the 5060 Ti (NVML units; +1000 ≈ +500 MHz real). Measured with vLLM running, greedy outputs compared against stock after every step:
+
+| Offset | Memory clock | 1 session | 3 sessions | Code | Greedy output vs stock | Xid |
+|---|---|---|---|---|---|---|
+| 0 | 14,001 MHz | 252 | 554 | 258 | — | 0 |
+| +3000 | 15,501 MHz | 263 | 574 | 273 | identical 6/6 | 0 |
+| **+5000** | **16,501 MHz** | **267** | **613** | **281** | identical 6/6 | 0 |
+| +6000 | 17,001 MHz | 276 | 569 | 284 | identical 6/6 | 0 |
+
++5000 is the default (`vram-oc/`): about +10 % at 3 sessions. `vram-oc-guard` enables persistence mode, applies the offset at boot, checks the kernel log for NVIDIA Xid errors every 5 s, and on the first one resets every GPU to stock. No voltage change; a reboot or `systemctl stop vram-oc-guard` also returns to stock.
+
+## Monitoring
+
+`./setup.sh monitoring` starts Prometheus, Grafana (:3000), node exporter and an NVIDIA GPU exporter (Docker, host network). The home dashboard shows the VRAM offset, Xid errors, the watchdog state, tok/s, running requests, drafter acceptance, KV cache use, per-card clock/temperature/power/utilization (by card name), VRM temperature and fan RPM. Node Exporter Full, NVIDIA GPU and the upstream vLLM dashboards are provisioned too.
+
+Discord alerts (Grafana alerting, webhook in `monitoring/grafana.env`, never committed): Xid error, watchdog reset to stock, vLLM down 1 min, GPU > 80 °C for 2 min, VRM > 90 °C for 2 min, KV cache > 95 % for 5 min.
+
 ## Runtime switches (`start-vllm.sh`)
 
 | Variable | Effect |
