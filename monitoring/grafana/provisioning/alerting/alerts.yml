@@ -2,6 +2,18 @@
 # (mode 600, not in git).
 apiVersion: 1
 
+templates:
+  - orgId: 1
+    name: discord-short
+    template: |
+      {{ define "discord.short.title" -}}
+      {{- if eq .Status "resolved" }}✅{{ else if eq .CommonLabels.severity "critical" }}🔴{{ else if eq .CommonLabels.severity "warning" }}🟠{{ else }}🟡{{ end }} {{ .CommonLabels.alertname -}}
+      {{- end }}
+      {{ define "discord.short.message" -}}
+      {{- range .Alerts }}{{ if eq .Status "resolved" }}Resolved: {{ end }}{{ .Annotations.summary }}
+      {{ end -}}
+      {{- end }}
+
 contactPoints:
   - orgId: 1
     name: discord
@@ -11,6 +23,8 @@ contactPoints:
         settings:
           url: $DISCORD_WEBHOOK_URL
           use_discord_username: false
+          title: '{{ template "discord.short.title" . }}'
+          message: '{{ template "discord.short.message" . }}'
 
 policies:
   - orgId: 1
