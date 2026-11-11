@@ -529,6 +529,101 @@
     "overrides": []
    },
    "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "CPU temperature (real, Tdie / CCD)",
+   "gridPos": {
+    "x": 0,
+    "y": 29,
+    "w": 8,
+    "h": 8
+   },
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "node_hwmon_temp_celsius * on(chip, sensor) group_left(label) node_hwmon_sensor_label{chip=~\".*00:18_3|.*00:19_3\", label=~\"Tdie|Tccd.*\"}",
+     "legendFormat": "{{chip}} {{label}}"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "celsius"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "CPU usage",
+   "gridPos": {
+    "x": 8,
+    "y": 29,
+    "w": 8,
+    "h": 8
+   },
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "1 - avg(rate(node_cpu_seconds_total{mode=\"idle\"}[1m]))",
+     "legendFormat": "all cores"
+    },
+    {
+     "refId": "B",
+     "expr": "max(1 - rate(node_cpu_seconds_total{mode=\"idle\"}[1m]))",
+     "legendFormat": "busiest core"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "percentunit",
+     "max": 1
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "RAM usage",
+   "gridPos": {
+    "x": 16,
+    "y": 29,
+    "w": 8,
+    "h": 8
+   },
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes",
+     "legendFormat": "used"
+    },
+    {
+     "refId": "B",
+     "expr": "node_memory_MemTotal_bytes",
+     "legendFormat": "total"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "bytes"
+    },
+    "overrides": []
+   },
+   "options": {}
   }
  ],
  "tags": [
