@@ -1,0 +1,7 @@
+apiVersion: 1
+providers:
+  - name: home-llm
+    folder: Home LLM server
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards

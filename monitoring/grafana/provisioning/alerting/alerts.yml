@@ -1,0 +1,113 @@
+# Grafana alerting for the home LLM server. The Discord webhook comes from DISCORD_WEBHOOK_URL in grafana.env
+# (mode 600, not in git).
+apiVersion: 1
+
+contactPoints:
+  - orgId: 1
+    name: discord
+    receivers:
+      - uid: discord-home-llm
+        type: discord
+        settings:
+          url: $DISCORD_WEBHOOK_URL
+          use_discord_username: false
+
+policies:
+  - orgId: 1
+    receiver: discord
+    group_by: [alertname]
+    group_wait: 30s
+    group_interval: 5m
+    repeat_interval: 4h
+
+groups:
+  - orgId: 1
+    name: home-llm
+    folder: Home LLM server
+    interval: 30s
+    rules:
+      - uid: xid-error
+        title: GPU Xid error
+        condition: C
+        for: 0s
+        annotations: {summary: "NVIDIA Xid error in the kernel log ({{ $values.A }} since boot). The VRAM overclock watchdog resets to stock."}
+        labels: {severity: critical}
+        data:
+          - refId: A
+            relativeTimeRange: {from: 300, to: 0}
+            datasourceUid: prometheus
+            model: {expr: "vram_oc_xid_errors_total", instant: true, refId: A}
+          - refId: C
+            datasourceUid: __expr__
+            model: {type: threshold, expression: A, refId: C, conditions: [{evaluator: {type: gt, params: [0]}}]}
+      - uid: watchdog-tripped
+        title: VRAM overclock reset to stock
+        condition: C
+        for: 0s
+        annotations: {summary: "The watchdog reset all GPUs to the stock memory clock after an Xid error. Restart vram-oc-guard by hand once checked."}
+        labels: {severity: critical}
+        data:
+          - refId: A
+            relativeTimeRange: {from: 300, to: 0}
+            datasourceUid: prometheus
+            model: {expr: "vram_oc_tripped", instant: true, refId: A}
+          - refId: C
+            datasourceUid: __expr__
+            model: {type: threshold, expression: A, refId: C, conditions: [{evaluator: {type: gt, params: [0]}}]}
+      - uid: vllm-down
+        title: vLLM is down
+        condition: C
+        for: 1m
+        noDataState: Alerting
+        annotations: {summary: "Prometheus can't reach vLLM on :8000."}
+        labels: {severity: critical}
+        data:
+          - refId: A
+            relativeTimeRange: {from: 300, to: 0}
+            datasourceUid: prometheus
+            model: {expr: 'up{job="vllm"}', instant: true, refId: A}
+          - refId: C
+            datasourceUid: __expr__
+            model: {type: threshold, expression: A, refId: C, conditions: [{evaluator: {type: lt, params: [1]}}]}
+      - uid: gpu-hot
+        title: GPU too hot
+        condition: C
+        for: 2m
+        annotations: {summary: "{{ $labels.card }} is at {{ $values.A }} °C."}
+        labels: {severity: warning}
+        data:
+          - refId: A
+            relativeTimeRange: {from: 300, to: 0}
+            datasourceUid: prometheus
+            model: {expr: "nvidia_smi_temperature_gpu * on(uuid) group_left(card) gpu_card_info", instant: true, refId: A}
+          - refId: C
+            datasourceUid: __expr__
+            model: {type: threshold, expression: A, refId: C, conditions: [{evaluator: {type: gt, params: [80]}}]}
+      - uid: vrm-hot
+        title: VRM too hot
+        condition: C
+        for: 2m
+        annotations: {summary: "CPU VRM is at {{ $values.A }} °C."}
+        labels: {severity: warning}
+        data:
+          - refId: A
+            relativeTimeRange: {from: 300, to: 0}
+            datasourceUid: prometheus
+            model: {expr: 'node_hwmon_temp_celsius * on(chip, sensor) group_left(label) node_hwmon_sensor_label{label="CPU VRM Temperature"}', instant: true, refId: A}
+          - refId: C
+            datasourceUid: __expr__
+            model: {type: threshold, expression: A, refId: C, conditions: [{evaluator: {type: gt, params: [90]}}]}
+      - uid: kv-cache-full
+        title: KV cache nearly full
+        condition: C
+        for: 5m
+        annotations: {summary: "vLLM KV cache at {{ $values.A }} (sessions will be paused and re-read)."}
+        labels: {severity: info}
+        data:
+          - refId: A
+            relativeTimeRange: {from: 300, to: 0}
+            datasourceUid: prometheus
+            model: {expr: "max(vllm:kv_cache_usage_perc)", instant: true, refId: A}
+          - refId: C
+            datasourceUid: __expr__
+            model: {type: threshold, expression: A, refId: C, conditions: [{evaluator: {type: gt, params: [0.95]}}]}

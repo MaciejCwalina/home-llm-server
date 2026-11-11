@@ -1,0 +1,2 @@
+# Memory clock offset for all GPUs (NVML units; +5000 = 16.5 GHz, tested stable 2026-11-11).
+OFFSET_MHZ=5000

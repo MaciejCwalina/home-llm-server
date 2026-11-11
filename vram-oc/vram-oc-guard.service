@@ -1,0 +1,14 @@
+[Unit]
+Description=GDDR7 memory overclock with Xid watchdog (resets to stock on the first Xid error)
+After=multi-user.target docker.service
+
+[Service]
+EnvironmentFile=/etc/default/vram-oc
+ExecStart=/home/maciej/llm/.venv/bin/python /usr/local/bin/vram-oc-guard
+# On stop the script resets the offset itself; this is the fallback if it was killed.
+ExecStopPost=/home/maciej/llm/.venv/bin/python -c "import pynvml as n; n.nvmlInit(); [n.nvmlDeviceSetMemClkVfOffset(n.nvmlDeviceGetHandleByIndex(i), 0) for i in range(n.nvmlDeviceGetCount())]"
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

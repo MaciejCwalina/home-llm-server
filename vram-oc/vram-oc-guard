@@ -1,0 +1,80 @@
+#!/usr/bin/env python3
+"""Apply a GDDR7 memory clock offset to every GPU and guard it.
+
+- Enables persistence mode so the driver keeps the offset while no process uses the GPUs.
+- Applies OFFSET_MHZ (from /etc/default/vram-oc) through NVML.
+- Every 5 s counts NVIDIA Xid errors in the kernel log. On a new Xid it resets every GPU to stock (offset 0)
+  and stays at stock until the service is restarted by hand.
+- Writes Prometheus metrics for node exporter's textfile collector.
+- On stop it resets the offset to 0.
+"""
+import os
+import re
+import signal
+import subprocess
+import sys
+import time
+
+import pynvml as nvml
+
+OFFSET_MHZ = int(os.environ.get("OFFSET_MHZ", "0"))
+TEXTFILE = "/var/lib/node_exporter/textfile/vram_oc.prom"
+INTERVAL_SECONDS = 5
+
+
+def set_offset(offset):
+    for index in range(nvml.nvmlDeviceGetCount()):
+        nvml.nvmlDeviceSetMemClkVfOffset(nvml.nvmlDeviceGetHandleByIndex(index), offset)
+
+
+def xid_count():
+    kernel_log = subprocess.run(["dmesg"], capture_output=True, text=True).stdout
+    return len(re.findall(r"NVRM: Xid", kernel_log))
+
+
+def write_metrics(offset, xid_errors, tripped):
+    temporary = TEXTFILE + ".tmp"
+    with open(temporary, "w") as handle:
+        handle.write("# HELP vram_oc_offset_mhz Memory clock offset currently applied (NVML units).\n# TYPE vram_oc_offset_mhz gauge\n")
+        handle.write(f"vram_oc_offset_mhz {offset}\n")
+        handle.write("# HELP vram_oc_xid_errors_total NVIDIA Xid errors in the kernel log since boot.\n# TYPE vram_oc_xid_errors_total counter\n")
+        handle.write(f"vram_oc_xid_errors_total {xid_errors}\n")
+        handle.write("# HELP vram_oc_tripped 1 when the watchdog reset the GPUs to stock after an Xid error.\n# TYPE vram_oc_tripped gauge\n")
+        handle.write(f"vram_oc_tripped {int(tripped)}\n")
+    os.replace(temporary, TEXTFILE)
+
+
+def main():
+    os.makedirs(os.path.dirname(TEXTFILE), exist_ok=True)
+    subprocess.run(["nvidia-smi", "-pm", "1"], capture_output=True)
+    nvml.nvmlInit()
+
+    def stop(*_):
+        set_offset(0)
+        write_metrics(0, xid_count(), False)
+        sys.exit(0)
+
+    signal.signal(signal.SIGTERM, stop)
+    signal.signal(signal.SIGINT, stop)
+
+    baseline_xid = xid_count()
+    if baseline_xid:
+        print(f"{baseline_xid} Xid error(s) already in the kernel log; staying at stock", flush=True)
+        offset, tripped = 0, True
+    else:
+        offset, tripped = OFFSET_MHZ, False
+    set_offset(offset)
+    print(f"memory offset +{offset} MHz applied to {nvml.nvmlDeviceGetCount()} GPUs", flush=True)
+
+    while True:
+        current_xid = xid_count()
+        if current_xid > baseline_xid and not tripped:
+            set_offset(0)
+            offset, tripped = 0, True
+            print(f"Xid error detected ({current_xid} total): reset all GPUs to stock memory clock", flush=True)
+        write_metrics(offset, current_xid, tripped)
+        time.sleep(INTERVAL_SECONDS)
+
+
+if __name__ == "__main__":
+    main()
