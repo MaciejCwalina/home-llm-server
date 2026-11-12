@@ -29,7 +29,7 @@
   },
   {
    "type": "timeseries",
-   "title": "Generation & prompt tok/s",
+   "title": "Generation tok/s",
    "datasource": {
     "type": "home-llm-live",
     "uid": "home-llm-live"
@@ -37,21 +37,13 @@
    "gridPos": {
     "x": 0,
     "y": 1,
-    "w": 6,
+    "w": 5,
     "h": 8
    },
    "targets": [
     {
      "refId": "A",
      "pattern": "vllm.tok_s",
-     "datasource": {
-      "type": "home-llm-live",
-      "uid": "home-llm-live"
-     }
-    },
-    {
-     "refId": "B",
-     "pattern": "vllm.prompt_tok_s",
      "datasource": {
       "type": "home-llm-live",
       "uid": "home-llm-live"
@@ -78,7 +70,42 @@
         "value": "Generation tok/s"
        }
       ]
-     },
+     }
+    ]
+   }
+  },
+  {
+   "type": "timeseries",
+   "title": "Prompt tok/s (prefill)",
+   "datasource": {
+    "type": "home-llm-live",
+    "uid": "home-llm-live"
+   },
+   "gridPos": {
+    "x": 5,
+    "y": 1,
+    "w": 5,
+    "h": 8
+   },
+   "targets": [
+    {
+     "refId": "B",
+     "pattern": "vllm.prompt_tok_s",
+     "datasource": {
+      "type": "home-llm-live",
+      "uid": "home-llm-live"
+     }
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "tok/s",
+     "custom": {
+      "lineWidth": 1,
+      "fillOpacity": 10
+     }
+    },
+    "overrides": [
      {
       "matcher": {
        "id": "byName",
@@ -102,9 +129,9 @@
     "uid": "home-llm-live"
    },
    "gridPos": {
-    "x": 6,
+    "x": 10,
     "y": 1,
-    "w": 6,
+    "w": 4,
     "h": 8
    },
    "targets": [
@@ -169,9 +196,9 @@
     "uid": "home-llm-live"
    },
    "gridPos": {
-    "x": 12,
+    "x": 14,
     "y": 1,
-    "w": 6,
+    "w": 5,
     "h": 8
    },
    "targets": [
@@ -212,15 +239,15 @@
   },
   {
    "type": "timeseries",
-   "title": "Drafter accepted tokens / step",
+   "title": "Drafter acceptance",
    "datasource": {
     "type": "home-llm-live",
     "uid": "home-llm-live"
    },
    "gridPos": {
-    "x": 18,
+    "x": 19,
     "y": 1,
-    "w": 6,
+    "w": 5,
     "h": 8
    },
    "targets": [
