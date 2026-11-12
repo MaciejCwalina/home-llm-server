@@ -66,7 +66,32 @@
       "fillOpacity": 10
      }
     },
-    "overrides": []
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "vllm.tok_s"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "Generation tok/s"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "vllm.prompt_tok_s"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "Prompt tok/s"
+       }
+      ]
+     }
+    ]
    }
   },
   {
@@ -108,7 +133,32 @@
       "fillOpacity": 10
      }
     },
-    "overrides": []
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "vllm.running"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "Requests running"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "vllm.waiting"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "Requests waiting"
+       }
+      ]
+     }
+    ]
    }
   },
   {
@@ -144,7 +194,20 @@
      "min": 0,
      "max": 1
     },
-    "overrides": []
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "vllm.kv_usage"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "KV cache usage"
+       }
+      ]
+     }
+    ]
    }
   },
   {
@@ -178,7 +241,20 @@
       "fillOpacity": 10
      }
     },
-    "overrides": []
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "vllm.spec_accept"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "Drafter acceptance"
+       }
+      ]
+     }
+    ]
    }
   },
   {
@@ -248,7 +324,56 @@
       "fillOpacity": 10
      }
     },
-    "overrides": []
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu0_asus_dual.temp_c"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU0 ASUS Dual: temperature"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu1_gigabyte_eagle.temp_c"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU1 Gigabyte Eagle: temperature"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu2_gainward_python_iii.temp_c"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU2 Gainward Python III: temperature"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu3_zotac_twin_edge.temp_c"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU3 Zotac Twin Edge: temperature"
+       }
+      ]
+     }
+    ]
    }
   },
   {
@@ -306,7 +431,56 @@
       "fillOpacity": 10
      }
     },
-    "overrides": []
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu0_asus_dual.mem_clock_mhz"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU0 ASUS Dual: memory clock"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu1_gigabyte_eagle.mem_clock_mhz"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU1 Gigabyte Eagle: memory clock"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu2_gainward_python_iii.mem_clock_mhz"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU2 Gainward Python III: memory clock"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu3_zotac_twin_edge.mem_clock_mhz"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU3 Zotac Twin Edge: memory clock"
+       }
+      ]
+     }
+    ]
    }
   },
   {
@@ -364,7 +538,56 @@
       "fillOpacity": 10
      }
     },
-    "overrides": []
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu0_asus_dual.power_w"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU0 ASUS Dual: power"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu1_gigabyte_eagle.power_w"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU1 Gigabyte Eagle: power"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu2_gainward_python_iii.power_w"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU2 Gainward Python III: power"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu3_zotac_twin_edge.power_w"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU3 Zotac Twin Edge: power"
+       }
+      ]
+     }
+    ]
    }
   },
   {
@@ -424,7 +647,56 @@
      "min": 0,
      "max": 100
     },
-    "overrides": []
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu0_asus_dual.util_pct"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU0 ASUS Dual: utilization"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu1_gigabyte_eagle.util_pct"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU1 Gigabyte Eagle: utilization"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu2_gainward_python_iii.util_pct"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU2 Gainward Python III: utilization"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu3_zotac_twin_edge.util_pct"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "GPU3 Zotac Twin Edge: utilization"
+       }
+      ]
+     }
+    ]
    }
   },
   {
@@ -482,7 +754,20 @@
       "graphMode": "area"
      }
     },
-    "overrides": []
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "vram_oc.xid_errors"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "Xid errors"
+       }
+      ]
+     }
+    ]
    }
   },
   {
@@ -528,7 +813,20 @@
       "graphMode": "area"
      }
     },
-    "overrides": []
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "vram_oc.tripped"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "Watchdog tripped"
+       }
+      ]
+     }
+    ]
    }
   },
   {
@@ -570,7 +868,20 @@
       "graphMode": "area"
      }
     },
-    "overrides": []
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "vram_oc.offset_mhz"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "VRAM OC offset (NVML units)"
+       }
+      ]
+     }
+    ]
    }
   },
   {
