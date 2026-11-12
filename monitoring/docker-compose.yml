@@ -51,10 +51,13 @@ services:
       - GF_USERS_ALLOW_SIGN_UP=false
       # Allow 1s auto-refresh (default minimum is 5s; dashboards use refresh: "1s" for streaming-grade updates)
       - GF_DASHBOARDS_MIN_REFRESH_INTERVAL=1s
+      # Local unsigned plugin (built in-repo, see grafana-live-ds/)
+      - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=home-llm-live
       - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/var/lib/grafana/dashboards/home-llm-overview.json
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
       - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - ./plugins:/var/lib/grafana/plugins
       - grafana-data:/var/lib/grafana
 
 volumes:
