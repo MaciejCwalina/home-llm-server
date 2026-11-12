@@ -8,17 +8,20 @@
 - Writes Prometheus metrics for node exporter's textfile collector.
 - On stop it resets the offset to 0.
 """
+import json
 import os
 import re
 import signal
 import subprocess
 import sys
 import time
+import urllib.request
 
 import pynvml as nvml
 
 OFFSET_MHZ = int(os.environ.get("OFFSET_MHZ", "0"))
 TEXTFILE = "/var/lib/node_exporter/textfile/vram_oc.prom"
+HUB_URL = os.environ.get("STREAM_HUB_URL", "http://127.0.0.1:9797/push")
 INTERVAL_SECONDS = 1
 
 
@@ -32,6 +35,23 @@ def xid_count():
     return len(re.findall(r"NVRM: Xid", kernel_log))
 
 
+def push_to_hub(offset, xid_errors, tripped):
+    """Push event metrics to the stream-hub so Grafana sees changes instantly."""
+    payload = json.dumps(
+        [
+            {"m": "vram_oc.offset_mhz", "v": float(offset)},
+            {"m": "vram_oc.xid_errors", "v": float(xid_errors)},
+            {"m": "vram_oc.tripped", "v": float(tripped)},
+        ]
+    ).encode()
+    request = urllib.request.Request(HUB_URL, data=payload, headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(request, timeout=1) as response:
+            response.read()
+    except Exception:
+        pass  # hub down: textfile collector still covers Prometheus
+
+
 def write_metrics(offset, xid_errors, tripped):
     temporary = TEXTFILE + ".tmp"
     with open(temporary, "w") as handle:
@@ -42,6 +62,7 @@ def write_metrics(offset, xid_errors, tripped):
         handle.write("# HELP vram_oc_tripped 1 when the watchdog reset the GPUs to stock after an Xid error.\n# TYPE vram_oc_tripped gauge\n")
         handle.write(f"vram_oc_tripped {int(tripped)}\n")
     os.replace(temporary, TEXTFILE)
+    push_to_hub(offset, xid_errors, tripped)
 
 
 def main():
