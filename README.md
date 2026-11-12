@@ -70,6 +70,8 @@ Decode is limited by memory bandwidth, so a GDDR7 overclock helps. NVML allows o
 
 Discord alerts (Grafana alerting, webhook in `monitoring/grafana.env`, never committed): Xid error, watchdog reset to stock, vLLM down 1 min, GPU > 80 °C for 2 min, VRM > 90 °C for 2 min, KV cache > 95 % for 5 min.
 
+**Live streaming:** `stream-hub` (systemd) polls vLLM `/metrics` every 200 ms and `nvidia-smi` every 500 ms, receives pushes from `vram-oc-guard`, and fans out over WebSocket (`127.0.0.1:9797`). The local Grafana plugin `home-llm-live` subscribes to it and pushes frames straight into panels — no polling, updates land as soon as they happen. The "Home LLM live (streaming)" dashboard shows vLLM throughput/scheduler/KV/drafter, all four GPUs and the VRAM OC state in real time. Prometheus stays the system of record (history + alerts); the stream is the live glass.
+
 ## Runtime switches (`start-vllm.sh`)
 
 | Variable | Effect |
