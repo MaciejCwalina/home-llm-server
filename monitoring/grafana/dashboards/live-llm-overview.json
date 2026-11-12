@@ -917,7 +917,8 @@
      "datasource": {
       "type": "prometheus",
       "uid": "prometheus"
-     }
+     },
+     "legendFormat": "vLLM sampler"
     },
     {
      "refId": "B",
@@ -925,7 +926,8 @@
      "datasource": {
       "type": "prometheus",
       "uid": "prometheus"
-     }
+     },
+     "legendFormat": "GPU sampler"
     }
    ],
    "fieldConfig": {
@@ -959,7 +961,8 @@
      "datasource": {
       "type": "prometheus",
       "uid": "prometheus"
-     }
+     },
+     "legendFormat": "vLLM failures / 5m"
     },
     {
      "refId": "B",
@@ -967,7 +970,8 @@
      "datasource": {
       "type": "prometheus",
       "uid": "prometheus"
-     }
+     },
+     "legendFormat": "GPU failures / 5m"
     }
    ],
    "fieldConfig": {
@@ -1001,7 +1005,8 @@
      "datasource": {
       "type": "prometheus",
       "uid": "prometheus"
-     }
+     },
+     "legendFormat": "subscribers"
     },
     {
      "refId": "B",
@@ -1009,7 +1014,8 @@
      "datasource": {
       "type": "prometheus",
       "uid": "prometheus"
-     }
+     },
+     "legendFormat": "dropped batches / 5m"
     }
    ],
    "fieldConfig": {
@@ -1043,7 +1049,8 @@
      "datasource": {
       "type": "prometheus",
       "uid": "prometheus"
-     }
+     },
+     "legendFormat": "tracked metrics"
     },
     {
      "refId": "B",
@@ -1051,7 +1058,8 @@
      "datasource": {
       "type": "prometheus",
       "uid": "prometheus"
-     }
+     },
+     "legendFormat": "history entries"
     }
    ],
    "fieldConfig": {
@@ -1151,7 +1159,8 @@
      "datasource": {
       "type": "prometheus",
       "uid": "prometheus"
-     }
+     },
+     "legendFormat": "batches / 10s"
     }
    ],
    "fieldConfig": {
@@ -1185,7 +1194,8 @@
      "datasource": {
       "type": "prometheus",
       "uid": "prometheus"
-     }
+     },
+     "legendFormat": "connections / 5m"
     }
    ],
    "fieldConfig": {
