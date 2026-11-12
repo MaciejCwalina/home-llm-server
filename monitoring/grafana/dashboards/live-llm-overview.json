@@ -318,62 +318,55 @@
   },
   {
    "type": "stat",
-   "title": "Temperature",
+   "title": "GPU0 ASUS Dual",
    "datasource": {
-    "type": "home-llm-live",
+    "type": "plugin",
     "uid": "home-llm-live"
    },
    "gridPos": {
     "x": 0,
     "y": 6,
     "w": 6,
-    "h": 5
+    "h": 6
    },
    "targets": [
     {
-     "refId": "A",
+     "refId": "te",
      "pattern": "gpu0_asus_dual.temp_c",
      "datasource": {
-      "type": "home-llm-live",
+      "type": "plugin",
       "uid": "home-llm-live"
      }
     },
     {
-     "refId": "B",
-     "pattern": "gpu1_gigabyte_eagle.temp_c",
+     "refId": "po",
+     "pattern": "gpu0_asus_dual.power_w",
      "datasource": {
-      "type": "home-llm-live",
+      "type": "plugin",
       "uid": "home-llm-live"
      }
     },
     {
-     "refId": "C",
-     "pattern": "gpu2_gainward_python_iii.temp_c",
+     "refId": "ut",
+     "pattern": "gpu0_asus_dual.util_pct",
      "datasource": {
-      "type": "home-llm-live",
-      "uid": "home-llm-live"
-     }
-    },
-    {
-     "refId": "D",
-     "pattern": "gpu3_zotac_twin_edge.temp_c",
-     "datasource": {
-      "type": "home-llm-live",
+      "type": "plugin",
       "uid": "home-llm-live"
      }
     }
    ],
    "fieldConfig": {
     "defaults": {
-     "unit": "celsius",
+     "color": {
+      "mode": "thresholds"
+     },
      "custom": {
-      "lineWidth": 1,
-      "fillOpacity": 10
+      "alignValue": "center"
      },
      "options": {
       "colorMode": "value",
       "graphMode": "area",
-      "textSize": "xl"
+      "textSize": "xxl"
      }
     },
     "overrides": [
@@ -385,222 +378,14 @@
       "properties": [
        {
         "id": "displayName",
-        "value": "GPU0 ASUS Dual: temperature"
-       }
-      ]
-     },
-     {
-      "matcher": {
-       "id": "byName",
-       "options": "gpu1_gigabyte_eagle.temp_c"
-      },
-      "properties": [
+        "value": "temperature"
+       },
        {
-        "id": "displayName",
-        "value": "GPU1 Gigabyte Eagle: temperature"
+        "id": "unit",
+        "value": "celsius"
        }
       ]
      },
-     {
-      "matcher": {
-       "id": "byName",
-       "options": "gpu2_gainward_python_iii.temp_c"
-      },
-      "properties": [
-       {
-        "id": "displayName",
-        "value": "GPU2 Gainward Python III: temperature"
-       }
-      ]
-     },
-     {
-      "matcher": {
-       "id": "byName",
-       "options": "gpu3_zotac_twin_edge.temp_c"
-      },
-      "properties": [
-       {
-        "id": "displayName",
-        "value": "GPU3 Zotac Twin Edge: temperature"
-       }
-      ]
-     }
-    ]
-   }
-  },
-  {
-   "type": "stat",
-   "title": "Memory clock",
-   "datasource": {
-    "type": "home-llm-live",
-    "uid": "home-llm-live"
-   },
-   "gridPos": {
-    "x": 6,
-    "y": 6,
-    "w": 6,
-    "h": 5
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "pattern": "gpu0_asus_dual.mem_clock_mhz",
-     "datasource": {
-      "type": "home-llm-live",
-      "uid": "home-llm-live"
-     }
-    },
-    {
-     "refId": "B",
-     "pattern": "gpu1_gigabyte_eagle.mem_clock_mhz",
-     "datasource": {
-      "type": "home-llm-live",
-      "uid": "home-llm-live"
-     }
-    },
-    {
-     "refId": "C",
-     "pattern": "gpu2_gainward_python_iii.mem_clock_mhz",
-     "datasource": {
-      "type": "home-llm-live",
-      "uid": "home-llm-live"
-     }
-    },
-    {
-     "refId": "D",
-     "pattern": "gpu3_zotac_twin_edge.mem_clock_mhz",
-     "datasource": {
-      "type": "home-llm-live",
-      "uid": "home-llm-live"
-     }
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "MHz",
-     "custom": {
-      "lineWidth": 1,
-      "fillOpacity": 10
-     },
-     "options": {
-      "colorMode": "value",
-      "graphMode": "area",
-      "textSize": "xl"
-     }
-    },
-    "overrides": [
-     {
-      "matcher": {
-       "id": "byName",
-       "options": "gpu0_asus_dual.mem_clock_mhz"
-      },
-      "properties": [
-       {
-        "id": "displayName",
-        "value": "GPU0 ASUS Dual: memory clock"
-       }
-      ]
-     },
-     {
-      "matcher": {
-       "id": "byName",
-       "options": "gpu1_gigabyte_eagle.mem_clock_mhz"
-      },
-      "properties": [
-       {
-        "id": "displayName",
-        "value": "GPU1 Gigabyte Eagle: memory clock"
-       }
-      ]
-     },
-     {
-      "matcher": {
-       "id": "byName",
-       "options": "gpu2_gainward_python_iii.mem_clock_mhz"
-      },
-      "properties": [
-       {
-        "id": "displayName",
-        "value": "GPU2 Gainward Python III: memory clock"
-       }
-      ]
-     },
-     {
-      "matcher": {
-       "id": "byName",
-       "options": "gpu3_zotac_twin_edge.mem_clock_mhz"
-      },
-      "properties": [
-       {
-        "id": "displayName",
-        "value": "GPU3 Zotac Twin Edge: memory clock"
-       }
-      ]
-     }
-    ]
-   }
-  },
-  {
-   "type": "stat",
-   "title": "Power draw",
-   "datasource": {
-    "type": "home-llm-live",
-    "uid": "home-llm-live"
-   },
-   "gridPos": {
-    "x": 12,
-    "y": 6,
-    "w": 6,
-    "h": 5
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "pattern": "gpu0_asus_dual.power_w",
-     "datasource": {
-      "type": "home-llm-live",
-      "uid": "home-llm-live"
-     }
-    },
-    {
-     "refId": "B",
-     "pattern": "gpu1_gigabyte_eagle.power_w",
-     "datasource": {
-      "type": "home-llm-live",
-      "uid": "home-llm-live"
-     }
-    },
-    {
-     "refId": "C",
-     "pattern": "gpu2_gainward_python_iii.power_w",
-     "datasource": {
-      "type": "home-llm-live",
-      "uid": "home-llm-live"
-     }
-    },
-    {
-     "refId": "D",
-     "pattern": "gpu3_zotac_twin_edge.power_w",
-     "datasource": {
-      "type": "home-llm-live",
-      "uid": "home-llm-live"
-     }
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "watt",
-     "custom": {
-      "lineWidth": 1,
-      "fillOpacity": 10
-     },
-     "options": {
-      "colorMode": "value",
-      "graphMode": "area",
-      "textSize": "xl"
-     }
-    },
-    "overrides": [
      {
       "matcher": {
        "id": "byName",
@@ -609,7 +394,100 @@
       "properties": [
        {
         "id": "displayName",
-        "value": "GPU0 ASUS Dual: power"
+        "value": "power"
+       },
+       {
+        "id": "unit",
+        "value": "watt"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu0_asus_dual.util_pct"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "utilization"
+       },
+       {
+        "id": "unit",
+        "value": "percent"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "type": "stat",
+   "title": "GPU1 Gigabyte Eagle",
+   "datasource": {
+    "type": "plugin",
+    "uid": "home-llm-live"
+   },
+   "gridPos": {
+    "x": 6,
+    "y": 6,
+    "w": 6,
+    "h": 6
+   },
+   "targets": [
+    {
+     "refId": "te",
+     "pattern": "gpu1_gigabyte_eagle.temp_c",
+     "datasource": {
+      "type": "plugin",
+      "uid": "home-llm-live"
+     }
+    },
+    {
+     "refId": "po",
+     "pattern": "gpu1_gigabyte_eagle.power_w",
+     "datasource": {
+      "type": "plugin",
+      "uid": "home-llm-live"
+     }
+    },
+    {
+     "refId": "ut",
+     "pattern": "gpu1_gigabyte_eagle.util_pct",
+     "datasource": {
+      "type": "plugin",
+      "uid": "home-llm-live"
+     }
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "color": {
+      "mode": "thresholds"
+     },
+     "custom": {
+      "alignValue": "center"
+     },
+     "options": {
+      "colorMode": "value",
+      "graphMode": "area",
+      "textSize": "xxl"
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu1_gigabyte_eagle.temp_c"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "temperature"
+       },
+       {
+        "id": "unit",
+        "value": "celsius"
        }
       ]
      },
@@ -621,109 +499,11 @@
       "properties": [
        {
         "id": "displayName",
-        "value": "GPU1 Gigabyte Eagle: power"
-       }
-      ]
-     },
-     {
-      "matcher": {
-       "id": "byName",
-       "options": "gpu2_gainward_python_iii.power_w"
-      },
-      "properties": [
+        "value": "power"
+       },
        {
-        "id": "displayName",
-        "value": "GPU2 Gainward Python III: power"
-       }
-      ]
-     },
-     {
-      "matcher": {
-       "id": "byName",
-       "options": "gpu3_zotac_twin_edge.power_w"
-      },
-      "properties": [
-       {
-        "id": "displayName",
-        "value": "GPU3 Zotac Twin Edge: power"
-       }
-      ]
-     }
-    ]
-   }
-  },
-  {
-   "type": "stat",
-   "title": "Utilization",
-   "datasource": {
-    "type": "home-llm-live",
-    "uid": "home-llm-live"
-   },
-   "gridPos": {
-    "x": 18,
-    "y": 6,
-    "w": 6,
-    "h": 5
-   },
-   "targets": [
-    {
-     "refId": "A",
-     "pattern": "gpu0_asus_dual.util_pct",
-     "datasource": {
-      "type": "home-llm-live",
-      "uid": "home-llm-live"
-     }
-    },
-    {
-     "refId": "B",
-     "pattern": "gpu1_gigabyte_eagle.util_pct",
-     "datasource": {
-      "type": "home-llm-live",
-      "uid": "home-llm-live"
-     }
-    },
-    {
-     "refId": "C",
-     "pattern": "gpu2_gainward_python_iii.util_pct",
-     "datasource": {
-      "type": "home-llm-live",
-      "uid": "home-llm-live"
-     }
-    },
-    {
-     "refId": "D",
-     "pattern": "gpu3_zotac_twin_edge.util_pct",
-     "datasource": {
-      "type": "home-llm-live",
-      "uid": "home-llm-live"
-     }
-    }
-   ],
-   "fieldConfig": {
-    "defaults": {
-     "unit": "percent",
-     "custom": {
-      "lineWidth": 1,
-      "fillOpacity": 10
-     },
-     "min": 0,
-     "max": 100,
-     "options": {
-      "colorMode": "value",
-      "graphMode": "area",
-      "textSize": "xl"
-     }
-    },
-    "overrides": [
-     {
-      "matcher": {
-       "id": "byName",
-       "options": "gpu0_asus_dual.util_pct"
-      },
-      "properties": [
-       {
-        "id": "displayName",
-        "value": "GPU0 ASUS Dual: utilization"
+        "id": "unit",
+        "value": "watt"
        }
       ]
      },
@@ -735,19 +515,205 @@
       "properties": [
        {
         "id": "displayName",
-        "value": "GPU1 Gigabyte Eagle: utilization"
+        "value": "utilization"
+       },
+       {
+        "id": "unit",
+        "value": "percent"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "type": "stat",
+   "title": "GPU2 Gainward Python III",
+   "datasource": {
+    "type": "plugin",
+    "uid": "home-llm-live"
+   },
+   "gridPos": {
+    "x": 12,
+    "y": 6,
+    "w": 6,
+    "h": 6
+   },
+   "targets": [
+    {
+     "refId": "te",
+     "pattern": "gpu2_gainward_python3.temp_c",
+     "datasource": {
+      "type": "plugin",
+      "uid": "home-llm-live"
+     }
+    },
+    {
+     "refId": "po",
+     "pattern": "gpu2_gainward_python3.power_w",
+     "datasource": {
+      "type": "plugin",
+      "uid": "home-llm-live"
+     }
+    },
+    {
+     "refId": "ut",
+     "pattern": "gpu2_gainward_python3.util_pct",
+     "datasource": {
+      "type": "plugin",
+      "uid": "home-llm-live"
+     }
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "color": {
+      "mode": "thresholds"
+     },
+     "custom": {
+      "alignValue": "center"
+     },
+     "options": {
+      "colorMode": "value",
+      "graphMode": "area",
+      "textSize": "xxl"
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu2_gainward_python3.temp_c"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "temperature"
+       },
+       {
+        "id": "unit",
+        "value": "celsius"
        }
       ]
      },
      {
       "matcher": {
        "id": "byName",
-       "options": "gpu2_gainward_python_iii.util_pct"
+       "options": "gpu2_gainward_python3.power_w"
       },
       "properties": [
        {
         "id": "displayName",
-        "value": "GPU2 Gainward Python III: utilization"
+        "value": "power"
+       },
+       {
+        "id": "unit",
+        "value": "watt"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu2_gainward_python3.util_pct"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "utilization"
+       },
+       {
+        "id": "unit",
+        "value": "percent"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "type": "stat",
+   "title": "GPU3 Zotac Twin Edge",
+   "datasource": {
+    "type": "plugin",
+    "uid": "home-llm-live"
+   },
+   "gridPos": {
+    "x": 18,
+    "y": 6,
+    "w": 6,
+    "h": 6
+   },
+   "targets": [
+    {
+     "refId": "te",
+     "pattern": "gpu3_zotac_twin_edge.temp_c",
+     "datasource": {
+      "type": "plugin",
+      "uid": "home-llm-live"
+     }
+    },
+    {
+     "refId": "po",
+     "pattern": "gpu3_zotac_twin_edge.power_w",
+     "datasource": {
+      "type": "plugin",
+      "uid": "home-llm-live"
+     }
+    },
+    {
+     "refId": "ut",
+     "pattern": "gpu3_zotac_twin_edge.util_pct",
+     "datasource": {
+      "type": "plugin",
+      "uid": "home-llm-live"
+     }
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "color": {
+      "mode": "thresholds"
+     },
+     "custom": {
+      "alignValue": "center"
+     },
+     "options": {
+      "colorMode": "value",
+      "graphMode": "area",
+      "textSize": "xxl"
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu3_zotac_twin_edge.temp_c"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "temperature"
+       },
+       {
+        "id": "unit",
+        "value": "celsius"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "gpu3_zotac_twin_edge.power_w"
+      },
+      "properties": [
+       {
+        "id": "displayName",
+        "value": "power"
+       },
+       {
+        "id": "unit",
+        "value": "watt"
        }
       ]
      },
@@ -759,7 +725,11 @@
       "properties": [
        {
         "id": "displayName",
-        "value": "GPU3 Zotac Twin Edge: utilization"
+        "value": "utilization"
+       },
+       {
+        "id": "unit",
+        "value": "percent"
        }
       ]
      }
@@ -771,7 +741,7 @@
    "title": "VRAM overclock (live)",
    "gridPos": {
     "x": 0,
-    "y": 11,
+    "y": 12,
     "w": 24,
     "h": 1
    },
@@ -787,7 +757,7 @@
    },
    "gridPos": {
     "x": 0,
-    "y": 12,
+    "y": 13,
     "w": 3,
     "h": 4
    },
@@ -846,7 +816,7 @@
    },
    "gridPos": {
     "x": 3,
-    "y": 12,
+    "y": 13,
     "w": 3,
     "h": 4
    },
@@ -905,7 +875,7 @@
    },
    "gridPos": {
     "x": 6,
-    "y": 12,
+    "y": 13,
     "w": 3,
     "h": 4
    },
@@ -957,7 +927,7 @@
    "datasource": null,
    "gridPos": {
     "x": 0,
-    "y": 16,
+    "y": 17,
     "w": 24,
     "h": 1
    },
@@ -973,7 +943,7 @@
    },
    "gridPos": {
     "x": 0,
-    "y": 17,
+    "y": 18,
     "w": 6,
     "h": 8
    },
@@ -1017,7 +987,7 @@
    },
    "gridPos": {
     "x": 6,
-    "y": 17,
+    "y": 18,
     "w": 6,
     "h": 8
    },
@@ -1061,7 +1031,7 @@
    },
    "gridPos": {
     "x": 12,
-    "y": 17,
+    "y": 18,
     "w": 6,
     "h": 8
    },
@@ -1105,7 +1075,7 @@
    },
    "gridPos": {
     "x": 18,
-    "y": 17,
+    "y": 18,
     "w": 6,
     "h": 8
    },
@@ -1149,7 +1119,7 @@
    },
    "gridPos": {
     "x": 0,
-    "y": 25,
+    "y": 26,
     "w": 4,
     "h": 4
    },
@@ -1182,7 +1152,7 @@
    },
    "gridPos": {
     "x": 4,
-    "y": 25,
+    "y": 26,
     "w": 4,
     "h": 4
    },
@@ -1215,7 +1185,7 @@
    },
    "gridPos": {
     "x": 8,
-    "y": 25,
+    "y": 26,
     "w": 8,
     "h": 4
    },
@@ -1250,7 +1220,7 @@
    },
    "gridPos": {
     "x": 16,
-    "y": 25,
+    "y": 26,
     "w": 8,
     "h": 4
    },
