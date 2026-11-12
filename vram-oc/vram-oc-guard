@@ -39,9 +39,9 @@ def push_to_hub(offset, xid_errors, tripped):
     """Push event metrics to the stream-hub so Grafana sees changes instantly."""
     payload = json.dumps(
         [
-            {"m": "vram_oc.offset_mhz", "v": float(offset)},
-            {"m": "vram_oc.xid_errors", "v": float(xid_errors)},
-            {"m": "vram_oc.tripped", "v": float(tripped)},
+            {"metric": "vram_oc.offset_mhz", "value": float(offset)},
+            {"metric": "vram_oc.xid_errors", "value": float(xid_errors)},
+            {"metric": "vram_oc.tripped", "value": float(tripped)},
         ]
     ).encode()
     request = urllib.request.Request(HUB_URL, data=payload, headers={"Content-Type": "application/json"})
