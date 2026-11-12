@@ -542,7 +542,7 @@
    "targets": [
     {
      "refId": "te",
-     "pattern": "gpu2_gainward_python3.temp_c",
+     "pattern": "gpu2_gainward_python_iii.temp_c",
      "datasource": {
       "type": "plugin",
       "uid": "home-llm-live"
@@ -550,7 +550,7 @@
     },
     {
      "refId": "po",
-     "pattern": "gpu2_gainward_python3.power_w",
+     "pattern": "gpu2_gainward_python_iii.power_w",
      "datasource": {
       "type": "plugin",
       "uid": "home-llm-live"
@@ -558,7 +558,7 @@
     },
     {
      "refId": "ut",
-     "pattern": "gpu2_gainward_python3.util_pct",
+     "pattern": "gpu2_gainward_python_iii.util_pct",
      "datasource": {
       "type": "plugin",
       "uid": "home-llm-live"
@@ -583,7 +583,7 @@
      {
       "matcher": {
        "id": "byName",
-       "options": "gpu2_gainward_python3.temp_c"
+       "options": "gpu2_gainward_python_iii.temp_c"
       },
       "properties": [
        {
@@ -599,7 +599,7 @@
      {
       "matcher": {
        "id": "byName",
-       "options": "gpu2_gainward_python3.power_w"
+       "options": "gpu2_gainward_python_iii.power_w"
       },
       "properties": [
        {
@@ -615,7 +615,7 @@
      {
       "matcher": {
        "id": "byName",
-       "options": "gpu2_gainward_python3.util_pct"
+       "options": "gpu2_gainward_python_iii.util_pct"
       },
       "properties": [
        {
