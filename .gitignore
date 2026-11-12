@@ -1,2 +1,8 @@
 monitoring/grafana.env
 AGENTS.md
+
+# build artifacts
+stream-hub/stream-hub
+stream-hub/testclient/
+grafana-live-ds/dist/
+grafana-live-ds/node_modules/
