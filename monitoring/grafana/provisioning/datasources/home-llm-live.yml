@@ -1,0 +1,10 @@
+apiVersion: 1
+datasources:
+  - name: Home LLM Live
+    uid: home-llm-live
+    type: home-llm-live
+    access: proxy
+    isDefault: false
+    editable: false
+    jsonData:
+      hubUrl: ws://127.0.0.1:9797/stream
