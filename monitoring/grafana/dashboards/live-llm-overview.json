@@ -1,0 +1,577 @@
+{
+  "title": "Home LLM live (streaming)",
+  "uid": "home-llm-live-overview",
+  "tags": [
+    "home-llm",
+    "streaming"
+  ],
+  "timezone": "browser",
+  "editable": true,
+  "refresh": "5s",
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "schemaVersion": 39,
+  "version": 0,
+  "panels": [
+    {
+      "type": "row",
+      "title": "vLLM (live)",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 1
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "type": "timeseries",
+      "title": "Generation & prompt tok/s",
+      "datasource": {
+        "type": "home-llm-live",
+        "uid": "home-llm-live"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 1,
+        "w": 6,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "pattern": "vllm.tok_s",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        },
+        {
+          "refId": "B",
+          "pattern": "vllm.prompt_tok_s",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "tok/s",
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Requests running / waiting",
+      "datasource": {
+        "type": "home-llm-live",
+        "uid": "home-llm-live"
+      },
+      "gridPos": {
+        "x": 6,
+        "y": 1,
+        "w": 6,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "pattern": "vllm.running",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        },
+        {
+          "refId": "B",
+          "pattern": "vllm.waiting",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": null,
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "KV cache usage",
+      "datasource": {
+        "type": "home-llm-live",
+        "uid": "home-llm-live"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 1,
+        "w": 6,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "pattern": "vllm.kv_usage",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 10
+          },
+          "min": 0,
+          "max": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Drafter accepted tokens / step",
+      "datasource": {
+        "type": "home-llm-live",
+        "uid": "home-llm-live"
+      },
+      "gridPos": {
+        "x": 18,
+        "y": 1,
+        "w": 6,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "pattern": "vllm.spec_accept",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": null,
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "row",
+      "title": "GPUs (live)",
+      "gridPos": {
+        "x": 0,
+        "y": 9,
+        "w": 24,
+        "h": 1
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "type": "timeseries",
+      "title": "Temperature",
+      "datasource": {
+        "type": "home-llm-live",
+        "uid": "home-llm-live"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 10,
+        "w": 6,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "pattern": "gpu0_asus_dual.temp_c",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        },
+        {
+          "refId": "B",
+          "pattern": "gpu1_gigabyte_eagle.temp_c",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        },
+        {
+          "refId": "C",
+          "pattern": "gpu2_gainward_python_iii.temp_c",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        },
+        {
+          "refId": "D",
+          "pattern": "gpu3_zotac_twin_edge.temp_c",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius",
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Memory clock",
+      "datasource": {
+        "type": "home-llm-live",
+        "uid": "home-llm-live"
+      },
+      "gridPos": {
+        "x": 6,
+        "y": 10,
+        "w": 6,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "pattern": "gpu0_asus_dual.mem_clock_mhz",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        },
+        {
+          "refId": "B",
+          "pattern": "gpu1_gigabyte_eagle.mem_clock_mhz",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        },
+        {
+          "refId": "C",
+          "pattern": "gpu2_gainward_python_iii.mem_clock_mhz",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        },
+        {
+          "refId": "D",
+          "pattern": "gpu3_zotac_twin_edge.mem_clock_mhz",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "MHz",
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Power draw",
+      "datasource": {
+        "type": "home-llm-live",
+        "uid": "home-llm-live"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 10,
+        "w": 6,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "pattern": "gpu0_asus_dual.power_w",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        },
+        {
+          "refId": "B",
+          "pattern": "gpu1_gigabyte_eagle.power_w",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        },
+        {
+          "refId": "C",
+          "pattern": "gpu2_gainward_python_iii.power_w",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        },
+        {
+          "refId": "D",
+          "pattern": "gpu3_zotac_twin_edge.power_w",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "watt",
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Utilization",
+      "datasource": {
+        "type": "home-llm-live",
+        "uid": "home-llm-live"
+      },
+      "gridPos": {
+        "x": 18,
+        "y": 10,
+        "w": 6,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "pattern": "gpu0_asus_dual.util_pct",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        },
+        {
+          "refId": "B",
+          "pattern": "gpu1_gigabyte_eagle.util_pct",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        },
+        {
+          "refId": "C",
+          "pattern": "gpu2_gainward_python_iii.util_pct",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        },
+        {
+          "refId": "D",
+          "pattern": "gpu3_zotac_twin_edge.util_pct",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 10
+          },
+          "min": 0,
+          "max": 100
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "row",
+      "title": "VRAM overclock (live)",
+      "gridPos": {
+        "x": 0,
+        "y": 18,
+        "w": 24,
+        "h": 1
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "type": "stat",
+      "title": "Xid errors since boot",
+      "datasource": {
+        "type": "home-llm-live",
+        "uid": "home-llm-live"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 19,
+        "w": 3,
+        "h": 4
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "pattern": "vram_oc.xid_errors",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": -99999999
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "options": {
+            "colorMode": "background",
+            "graphMode": "area"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Watchdog tripped",
+      "datasource": {
+        "type": "home-llm-live",
+        "uid": "home-llm-live"
+      },
+      "gridPos": {
+        "x": 3,
+        "y": 19,
+        "w": 3,
+        "h": 4
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "pattern": "vram_oc.tripped",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": -99999999
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "options": {
+            "colorMode": "background",
+            "graphMode": "area"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Memclk offset (NVML units)",
+      "datasource": {
+        "type": "home-llm-live",
+        "uid": "home-llm-live"
+      },
+      "gridPos": {
+        "x": 6,
+        "y": 19,
+        "w": 3,
+        "h": 4
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "pattern": "vram_oc.offset_mhz",
+          "datasource": {
+            "type": "home-llm-live",
+            "uid": "home-llm-live"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": -99999999
+              }
+            ]
+          },
+          "options": {
+            "colorMode": "background",
+            "graphMode": "area"
+          }
+        },
+        "overrides": []
+      }
+    }
+  ]
+}
