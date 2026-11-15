@@ -87,7 +87,7 @@ groups:
         title: GPU exporter not reporting
         condition: C
         for: 1m
-        annotations: {summary: "nvidia-gpu-exporter is up but serves no GPU data (NVML failure inside the container). Fix: docker restart monitoring-nvidia-gpu-exporter-1"}
+        annotations: {summary: "nvidia-gpu-exporter is up but serves no GPU data (NVML failure inside the container). gpu-exporter-watchdog should have restarted it — check journalctl -u gpu-exporter-watchdog"}
         labels: {severity: critical}
         data:
           - refId: A

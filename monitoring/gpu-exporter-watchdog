@@ -1,0 +1,29 @@
+#!/bin/sh
+# Watchdog for the nvidia-gpu-exporter container (self-healing).
+#
+# The exporter can come up in a stale NVML state (e.g. after a kernel driver reload):
+# nvidia-smi inside the container fails with "Failed to initialize NVML: Unknown Error"
+# and only Go runtime metrics are served on :9835. up{job="nvidia-gpu"} stays 1, so
+# Prometheus/Grafana alone never notice. This watchdog detects the missing GPU data
+# and restarts the container (the fix that worked on 2026-11-15).
+#
+# The container name comes from docker compose (project "monitoring" + service name).
+
+exporter_url="http://127.0.0.1:9835/metrics"
+container="monitoring-nvidia-gpu-exporter-1"
+check_seconds=30
+cooldown_seconds=300
+last_restart=0
+
+while true; do
+    if ! curl -sf --max-time 5 "$exporter_url" | grep -q '^nvidia_smi_temperature_gpu'; then
+        now=$(date +%s)
+        if [ $((now - last_restart)) -ge "$cooldown_seconds" ]; then
+            echo "$(date -Is) no GPU data from $exporter_url, restarting $container"
+            if docker restart "$container"; then
+                last_restart=$now
+            fi
+        fi
+    fi
+    sleep "$check_seconds"
+done

@@ -155,6 +155,10 @@ stage_monitoring() {
     nvidia-smi --query-gpu=index,uuid,name --format=csv,noheader | awk -F', ' '{gsub("GPU-","",$2); printf "gpu_card_info{uuid=\"%s\",card=\"GPU%s %s\"} 1\n", $2, $1, $3}' \
         | sudo tee /var/lib/node_exporter/textfile/gpu_cards.prom >/dev/null
     (cd "$LLM_HOME/monitoring" && docker compose up -d)
+    sudo install -m 755 "$SCRIPT_DIRECTORY/monitoring/gpu-exporter-watchdog" /usr/local/bin/gpu-exporter-watchdog
+    sudo tee /etc/systemd/system/gpu-exporter-watchdog.service >/dev/null < "$SCRIPT_DIRECTORY/monitoring/gpu-exporter-watchdog.service"
+    sudo systemctl daemon-reload
+    sudo systemctl enable --now gpu-exporter-watchdog
     echo "Grafana: http://$(hostname -I | awk '{print $1}'):3000 (user admin)"
 }
 
