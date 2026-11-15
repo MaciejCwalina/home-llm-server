@@ -83,6 +83,20 @@ groups:
           - refId: C
             datasourceUid: __expr__
             model: {type: threshold, expression: A, refId: C, conditions: [{evaluator: {type: lt, params: [1]}}]}
+      - uid: gpu-exporter-down
+        title: GPU exporter not reporting
+        condition: C
+        for: 1m
+        annotations: {summary: "nvidia-gpu-exporter is up but serves no GPU data (NVML failure inside the container). Fix: docker restart monitoring-nvidia-gpu-exporter-1"}
+        labels: {severity: critical}
+        data:
+          - refId: A
+            relativeTimeRange: {from: 300, to: 0}
+            datasourceUid: prometheus
+            model: {expr: "absent(nvidia_smi_temperature_gpu)", instant: true, refId: A}
+          - refId: C
+            datasourceUid: __expr__
+            model: {type: threshold, expression: A, refId: C, conditions: [{evaluator: {type: gt, params: [0]}}]}
       - uid: gpu-hot
         title: GPU too hot
         condition: C
