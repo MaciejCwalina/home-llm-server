@@ -21,7 +21,7 @@ custom_all_reduce_target=/usr/local/lib/python3.12/dist-packages/vllm/distribute
 docker rm -f vllm >/dev/null 2>&1 || true
 # shellcheck disable=SC2086  # VLLM_DOCKER_ENV and VLLM_EXTRA_ARGS are intentionally word-split
 docker run -d --name vllm --restart unless-stopped \
-  --gpus all --ipc=host \
+  --device nvidia.com/gpu=all --ipc=host \
   -p 8000:8000 \
   -v "$HOME/llm/models:/models:ro" \
   -v "$HOME/llm/cache:/root/.cache" \

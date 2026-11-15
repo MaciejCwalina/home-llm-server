@@ -38,13 +38,11 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu, utility]
+    # GPUs via CDI, not the legacy nvidia runtime hook: with the hook, every `systemctl daemon-reload`
+    # rewrites the container's device cgroup without the GPUs and NVML fails with "Unknown Error".
+    # The spec (/var/run/cdi/nvidia.yaml) is kept current by nvidia-cdi-refresh.
+    devices:
+      - nvidia.com/gpu=all
 
   grafana:
     image: grafana/grafana:latest
