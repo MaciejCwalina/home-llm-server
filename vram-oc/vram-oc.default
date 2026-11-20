@@ -1,2 +1,5 @@
 # Memory clock offset for all GPUs (NVML units; +5000 = 16.5 GHz, tested stable 2026-11-11).
 OFFSET_MHZ=5000
+# always: offset applied all the time. on-demand: only while vLLM has requests; stock when idle for IDLE_SECONDS.
+OC_MODE=on-demand
+IDLE_SECONDS=3
